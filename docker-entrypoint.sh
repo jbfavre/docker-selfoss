@@ -11,4 +11,4 @@ trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
 /bin/chown selfoss:selfoss ${SELFOSSDATA}
 
-/bin/bash
+/bin/su - selfoss -c 'php -S 0.0.0.0:8080 -t /home/selfoss'

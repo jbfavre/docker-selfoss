@@ -11,13 +11,14 @@ ADD scripts/debian_cleaner.sh /tmp/
 RUN /usr/bin/apt-get update -yqq \
  && /usr/bin/apt-get upgrade --no-install-recommends -yqq \
  && /usr/bin/apt-get install --no-install-recommends -yqq curl ca-certificates \
-                             nginx php5-fpm php5-apcu php5-curl php5-gd php5-sqlite \
+                             php5-cli php5-apcu php5-curl php5-gd php5-sqlite \
  && /usr/bin/chsh -s /bin/bash root \
  && /bin/rm /bin/sh && ln -s /bin/bash /bin/sh \
  && /usr/sbin/groupadd -r selfoss \
- && /usr/sbin/useradd -r -m -s /bin/bash -g selfoss sefloss \
- && /usr/bin/curl -o /tmp/selfoss.tar.gz https://github.com/SSilence/selfoss/archive/2.15.tar.gz \
- && /bin/su - dataiku -c '/bin/tar xzf /tmp/selfoss.tar.gz -C /home/selfoss --strip-components=1' \
+ && /usr/sbin/useradd -r -m -s /bin/bash -g selfoss selfoss \
+ && /usr/bin/curl -L -o /tmp/selfoss.tar.gz https://github.com/SSilence/selfoss/archive/2.15.tar.gz
+
+RUN /bin/su - selfoss -c '/bin/tar xzf /tmp/selfoss.tar.gz -C /home/selfoss --strip-components=1' \
  && /bin/rm /tmp/selfoss.tar.gz \
  && /bin/mkdir /var/lib/selfoss \
  && /bin/chown -R selfoss: /var/lib/selfoss \
