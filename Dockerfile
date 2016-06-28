@@ -19,7 +19,8 @@ RUN /usr/bin/apt-get update -yqq \
  && /usr/bin/curl -L -o /tmp/selfoss.tar.gz https://github.com/SSilence/selfoss/archive/2.15.tar.gz
 
 RUN /bin/su - selfoss -c '/bin/tar xzf /tmp/selfoss.tar.gz -C /home/selfoss --strip-components=1' \
- && /bin/rm /tmp/selfoss.tar.gz \
+ && /bin/rm -f /tmp/selfoss.tar.gz \
+ && /bin/rm -f /home/selfoss/selfoss*.zip \
  && /bin/mkdir /var/lib/selfoss \
  && /bin/chown -R selfoss: /var/lib/selfoss \
  && /bin/bash /tmp/debian_cleaner.sh
@@ -27,5 +28,6 @@ RUN /bin/su - selfoss -c '/bin/tar xzf /tmp/selfoss.tar.gz -C /home/selfoss --st
 VOLUME /var/lib/selfoss
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 ADD ./docker-entrypoint.sh /usr/local/bin
+ADD ./run.php /home/selfoss/
 
-EXPOSE 80
+EXPOSE 8080
