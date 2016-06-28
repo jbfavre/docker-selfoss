@@ -29,6 +29,7 @@ if (php_sapi_name() == 'cli-server') {
         // taken from cli arg, hack for updater
         $_SERVER["SERVER_ADDR"] = '127.0.0.1';
         $_SERVER["SERVER_NAME"] = '127.0.0.1';
+        $_SERVER["SERVER_PORT"] = '80';
         require("index.php");
     }
 
